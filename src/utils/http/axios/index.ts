@@ -286,9 +286,8 @@ function createAxios(opt?: Partial<CreateAxiosOptions>) {
 export const defHttp = createAxios();
 
 // other api url
-// export const otherHttp = createAxios({
-//   requestOptions: {
-//     apiUrl: 'xxx',
-//     urlPrefix: 'xxx',
-//   },
-// });
+export const adminHttp = createAxios({
+  headers:{
+    'Content-Type': ContentTypeEnum.FORM_URLENCODED
+  }
+});

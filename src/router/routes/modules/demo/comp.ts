@@ -223,46 +223,6 @@ const comp: AppRouteModule = {
             title: t('routes.demo.table.footerTable'),
           },
         },
-        {
-          path: 'editCellTable',
-          name: 'EditCellTableDemo',
-          component: () => import('/@/views/demo/table/EditCellTable.vue'),
-          meta: {
-            title: t('routes.demo.table.editCellTable'),
-          },
-        },
-        {
-          path: 'editRowTable',
-          name: 'EditRowTableDemo',
-          component: () => import('/@/views/demo/table/EditRowTable.vue'),
-          meta: {
-            title: t('routes.demo.table.editRowTable'),
-          },
-        },
-        {
-          path: 'authColumn',
-          name: 'AuthColumnDemo',
-          component: () => import('/@/views/demo/table/AuthColumn.vue'),
-          meta: {
-            title: t('routes.demo.table.authColumn'),
-          },
-        },
-        {
-          path: 'resizeParentHeightTable',
-          name: 'ResizeParentHeightTable',
-          component: () => import('/@/views/demo/table/ResizeParentHeightTable.vue'),
-          meta: {
-            title: t('routes.demo.table.resizeParentHeightTable'),
-          },
-        },
-        {
-          path: 'vxeTable',
-          name: 'VxeTableDemo',
-          component: () => import('/@/views/demo/table/VxeTable.vue'),
-          meta: {
-            title: t('routes.demo.table.vxeTable'),
-          },
-        },
       ],
     },
     {

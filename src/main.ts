@@ -15,16 +15,24 @@ import { initAppConfigStore } from '@/logics/initAppConfig';
 import { router, setupRouter } from '@/router';
 import { setupRouterGuard } from '@/router/guard';
 import { setupStore } from '@/store';
+import ElementPlus from 'element-plus'
+import 'element-plus/dist/index.css'
+import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
 import App from './App.vue';
 
 async function bootstrap() {
   const app = createApp(App);
-
+  
+  // 使用elementPlus
+  app.use(ElementPlus)
   // Configure store
   // 配置 store
   setupStore(app);
-
+  // 注册element-plus图标
+  for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
+    app.component(key, component)
+  }
   // Initialize internal system configuration
   // 初始化内部系统配置
   initAppConfigStore();

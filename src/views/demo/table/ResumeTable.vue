@@ -54,7 +54,7 @@
 <script setup>
 import { ref } from 'vue'
 import { Search, Edit, Setting, Delete } from '@element-plus/icons-vue'
-import { option } from "./basicTableoptions"
+import { option } from "./ResumeTableoptions"
 import { findAllResume } from "@/api/sys/admin"
 
 // 总页的数量
