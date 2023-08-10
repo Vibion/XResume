@@ -23,6 +23,7 @@ interface UserState {
   roleList: RoleEnum[];
   sessionTimeout?: boolean;
   lastUpdateTime: number;
+  username: string;
 }
 
 export const useUserStore = defineStore({
@@ -38,6 +39,8 @@ export const useUserStore = defineStore({
     sessionTimeout: false,
     // Last fetch time
     lastUpdateTime: 0,
+    // username
+    username: ''
   }),
   getters: {
     getUserInfo(state): UserInfo {
@@ -54,6 +57,9 @@ export const useUserStore = defineStore({
     },
     getLastUpdateTime(state): number {
       return state.lastUpdateTime;
+    },
+    getUsername(state): string {
+      return state.username;
     },
   },
   actions: {
@@ -72,6 +78,9 @@ export const useUserStore = defineStore({
     },
     setSessionTimeout(flag: boolean) {
       this.sessionTimeout = flag;
+    },
+    setUsername(username: string) {
+      this.username = username;
     },
     resetState() {
       this.userInfo = null;
@@ -92,23 +101,24 @@ export const useUserStore = defineStore({
         const { goHome = true, mode, ...loginParams } = params;
         const data = await loginApi(loginParams, mode);
         // const { token } = data;
-        console.log('登录的返回:' + data);
+        // console.log( data);
         const token = 'fakeToken1';
-
+        
         // save token
         this.setToken(token);
-        return this.afterLoginAction(goHome);
+        // this.setUserInfo(data)
+        return this.afterLoginAction(goHome,data);
       } catch (error) {
         return Promise.reject(error);
       }
     },
-    async afterLoginAction(goHome?: boolean): Promise<GetUserInfoModel | null> {
+    async afterLoginAction(goHome?: boolean,data): Promise<GetUserInfoModel | null> {
       if (!this.getToken) return null;
       // get user info
       console.log('即将getuserInfo');
       const userInfo = await this.getUserInfoAction();
       console.log('userInfo');
-      console.log(userInfo);
+      // console.log(userInfo);
       const sessionTimeout = this.sessionTimeout;
       if (sessionTimeout) {
         this.setSessionTimeout(false);
@@ -124,7 +134,7 @@ export const useUserStore = defineStore({
         }
         goHome && (await router.replace(userInfo?.homePath || PageEnum.BASE_HOME));
       }
-      return userInfo;
+      return data;
     },
     async getUserInfoAction(): Promise<UserInfo | null> {
       if (!this.getToken) return null;

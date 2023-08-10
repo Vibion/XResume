@@ -1,13 +1,16 @@
 <template>
   <el-card>
     <el-row :gutter="20" class="header">
-      <el-col :span="7">
-        <!-- <el-input :placeholder="$t(`table.placeholder`)" clearable v-model="queryFormByName.name">
-        </el-input> -->
+      <el-col :span="3">
+        <el-select v-model="value" class="m-2" placeholder="选择公司" size="large">
+          <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" />
+        </el-select>
       </el-col>
       <!-- 搜索按钮 -->
-      <!-- <el-button type="primary" :icon="Search" @click="initAdminConsultRecordByName">{{ $t(`table.search`)
-      }}</el-button> -->
+      <el-col :span="3">
+        <el-button type="primary" :icon="Search" @click="initAdminConsultRecordByName">搜索
+        </el-button>
+      </el-col>
     </el-row>
     <el-table :data="tableData" stripe style="width: 100%">
       <el-table-column :prop="item.prop" :label="item.label" v-for="(item, index) in option" :key="index"
@@ -56,6 +59,29 @@ import { ref } from 'vue'
 import { Search, Edit, Setting, Delete } from '@element-plus/icons-vue'
 import { option } from "./ResumeTableoptions"
 import { findAllResume } from "@/api/sys/admin"
+const value = ref('')
+const options = [
+  {
+    value: 'Option1',
+    label: 'Option1',
+  },
+  {
+    value: 'Option2',
+    label: 'Option2',
+  },
+  {
+    value: 'Option3',
+    label: 'Option3',
+  },
+  {
+    value: 'Option4',
+    label: 'Option4',
+  },
+  {
+    value: 'Option5',
+    label: 'Option5',
+  },
+]
 
 // 总页的数量
 const total = ref(0)
@@ -64,7 +90,11 @@ const queryForm = ref({
   pageNum: 0,
   pageSize: 15
 })
-
+const queryFormByName = ref({
+  name: '',
+  pageNum: 0,
+  pageSize: 15
+})
 const tableData = ref([{ 'id': 1 }])
 
 const initAllResume = async () => {

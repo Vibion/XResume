@@ -58,9 +58,12 @@ const transform: AxiosTransform = {
     // console.log('hasSuccess:' + hasSuccess)
     // console.log('status:' + status)
     // createMessage.success('123');
+    console.log(message)
+    
     if (!status) {
       // createMessage.error(message);
       // hasSuccess = false
+      
       throw new Error(message || t('sys.api.apiRequestFailed'));
     }
     if (hasSuccess) {
