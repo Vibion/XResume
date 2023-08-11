@@ -54,16 +54,16 @@ const transform: AxiosTransform = {
     const { code, message, data, status } = res.data;
     // console.log(data)
     // 这里逻辑可以根据项目进行修改
-    const hasSuccess = res.data && Reflect.has(res.data, 'code') && code === ResultEnum.SUCCESS;
+    const hasSuccess = status
     // console.log('hasSuccess:' + hasSuccess)
     // console.log('status:' + status)
     // createMessage.success('123');
     console.log(message)
-    
+    console.log(status)
     if (!status) {
       // createMessage.error(message);
       // hasSuccess = false
-      
+      console.log(status)
       throw new Error(message || t('sys.api.apiRequestFailed'));
     }
     if (hasSuccess) {

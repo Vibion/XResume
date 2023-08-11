@@ -15,64 +15,28 @@ const charts: AppRouteModule = {
   },
   children: [
     {
-      path: 'baiduMap',
-      name: 'BaiduMap',
+      path: 'map',
+      name: 'Map',
+      component: () => import('/@/views/demo/charts/Map.vue'),
       meta: {
-        title: t('routes.demo.charts.baiduMap'),
+        title: t('routes.demo.charts.map'),
       },
-      component: () => import('/@/views/demo/charts/map/Baidu.vue'),
     },
     {
-      path: 'aMap',
-      name: 'AMap',
+      path: 'line',
+      name: 'Line',
+      component: () => import('/@/views/demo/charts/Line.vue'),
       meta: {
-        title: t('routes.demo.charts.aMap'),
+        title: t('routes.demo.charts.line'),
       },
-      component: () => import('/@/views/demo/charts/map/Gaode.vue'),
     },
     {
-      path: 'googleMap',
-      name: 'GoogleMap',
+      path: 'pie',
+      name: 'Pie',
+      component: () => import('/@/views/demo/charts/Pie.vue'),
       meta: {
-        title: t('routes.demo.charts.googleMap'),
+        title: t('routes.demo.charts.pie'),
       },
-      component: () => import('/@/views/demo/charts/map/Google.vue'),
-    },
-
-    {
-      path: 'echarts',
-      name: 'Echarts',
-      component: getParentLayout('Echarts'),
-      meta: {
-        title: 'Echarts',
-      },
-      redirect: '/charts/echarts/map',
-      children: [
-        {
-          path: 'map',
-          name: 'Map',
-          component: () => import('/@/views/demo/charts/Map.vue'),
-          meta: {
-            title: t('routes.demo.charts.map'),
-          },
-        },
-        {
-          path: 'line',
-          name: 'Line',
-          component: () => import('/@/views/demo/charts/Line.vue'),
-          meta: {
-            title: t('routes.demo.charts.line'),
-          },
-        },
-        {
-          path: 'pie',
-          name: 'Pie',
-          component: () => import('/@/views/demo/charts/Pie.vue'),
-          meta: {
-            title: t('routes.demo.charts.pie'),
-          },
-        },
-      ],
     },
   ],
 };

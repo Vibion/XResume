@@ -11,9 +11,10 @@ const iframe: AppRouteModule = {
   component: LAYOUT,
   redirect: '/frame/doc',
   meta: {
-    orderNo: 1000,
+    hideChildrenInMenu:true,
+    orderNo: 15,
     icon: 'ion:tv-outline',
-    title: t('routes.demo.iframe.frame'),
+    title: "接口文档",
   },
 
   children: [
@@ -22,27 +23,27 @@ const iframe: AppRouteModule = {
       name: 'Doc',
       component: IFrame,
       meta: {
-        frameSrc: 'https://doc.vvbin.cn/',
+        frameSrc: 'https://console-docs.apipost.cn/preview/e876f7f983bef185/c36744ff6f07beb9',
         title: t('routes.demo.iframe.doc'),
       },
     },
-    {
-      path: 'antv',
-      name: 'Antv',
-      component: IFrame,
-      meta: {
-        frameSrc: 'https://www.antdv.com/docs/vue/introduce-cn/',
-        title: t('routes.demo.iframe.antv'),
-      },
-    },
-    {
-      path: 'https://doc.vvbin.cn/',
-      name: 'DocExternal',
-      component: IFrame,
-      meta: {
-        title: t('routes.demo.iframe.docExternal'),
-      },
-    },
+    // {
+    //   path: 'antv',
+    //   name: 'Antv',
+    //   component: IFrame,
+    //   meta: {
+    //     frameSrc: '',
+    //     title: t('routes.demo.iframe.antv'),
+    //   },
+    // },
+    // {
+    //   path: 'https://doc.vvbin.cn/',
+    //   name: 'DocExternal',
+    //   component: IFrame,
+    //   meta: {
+    //     title: t('routes.demo.iframe.docExternal'),
+    //   },
+    // },
   ],
 };
 
