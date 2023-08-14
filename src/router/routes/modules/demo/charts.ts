@@ -9,25 +9,26 @@ const charts: AppRouteModule = {
   component: LAYOUT,
   redirect: '/charts/echarts/map',
   meta: {
-    orderNo: 500,
+    orderNo: 14,
     icon: 'ion:bar-chart-outline',
     title: t('routes.demo.charts.charts'),
   },
   children: [
-    {
-      path: 'map',
-      name: 'Map',
-      component: () => import('/@/views/demo/charts/Map.vue'),
-      meta: {
-        title: t('routes.demo.charts.map'),
-      },
-    },
+    // {
+    //   path: 'map',
+    //   name: 'Map',
+    //   component: () => import('/@/views/demo/charts/Map.vue'),
+    //   meta: {
+    //     title: t('routes.demo.charts.map'),
+    //   },
+    // },
     {
       path: 'line',
       name: 'Line',
       component: () => import('/@/views/demo/charts/Line.vue'),
       meta: {
         title: t('routes.demo.charts.line'),
+        icon:'carbon:math-curve'
       },
     },
     {
@@ -36,6 +37,7 @@ const charts: AppRouteModule = {
       component: () => import('/@/views/demo/charts/Pie.vue'),
       meta: {
         title: t('routes.demo.charts.pie'),
+        icon:'icon-park-solid:pie-two'
       },
     },
   ],

@@ -11,7 +11,7 @@ const resumelist: AppRouteModule = {
   meta: {
     hideChildrenInMenu: true,
     orderNo: 10,
-    icon: 'ion:menu-outline',
+    icon: 'mdi:file-account',
     title: '简历列表',
   },
   children: [

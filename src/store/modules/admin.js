@@ -4,7 +4,7 @@ import { defineStore } from 'pinia'
 // 第一个参数是你的应用中 Store 的唯一 ID。
 export const useAdminStore = defineStore('admin', {
   // 其他配置...
-  state: ()=> ({userInfo : {},currentCompany:'',currentCompanyApi:''}),
+  state: ()=> ({userInfo : {},currentCompany:'',currentCompanyApi:'',timeList:[]}),
   getters:{
     getUserInfo:(state)=>state.userInfo,
     getCurrentCompany:(state)=>state.currentCompany
@@ -18,6 +18,9 @@ export const useAdminStore = defineStore('admin', {
     },
     setCurrentCompanyApi(company){
       this.currentCompanyApi = company
+    },
+    setTimeList(timeList){
+      this.timeList = timeList
     },
   },
   persist: {

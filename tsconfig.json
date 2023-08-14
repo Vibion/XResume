@@ -9,7 +9,9 @@
       "/#/*": ["types/*"],
       "@/*": ["src/*"],
       "#/*": ["types/*"]
-    }
+    },
+    "allowJs": true,
+    "checkJs": true
   },
   "include": [
     "tests/**/*.ts",

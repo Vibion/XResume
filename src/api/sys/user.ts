@@ -1,4 +1,4 @@
-import { defHttp } from '/@/utils/http/axios';
+import { defHttp,adminHttp } from '/@/utils/http/axios';
 import { LoginParams, LoginResultModel, GetUserInfoModel } from './model/userModel';
 
 import { ErrorMessageMode } from '/#/axios';
@@ -25,7 +25,6 @@ export function loginApi(params: LoginParams, mode: ErrorMessageMode = 'modal') 
     },
   );
 }
-
 /**
  * @description: getUserInfo
  */

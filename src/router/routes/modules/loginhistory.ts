@@ -11,7 +11,7 @@ const loginhistory: AppRouteModule = {
   meta: {
     hideChildrenInMenu: true,
     orderNo: 13,
-    icon: 'ion:menu-outline',
+    icon: 'ic:baseline-history',
     title: '登录历史',
   },
   children: [

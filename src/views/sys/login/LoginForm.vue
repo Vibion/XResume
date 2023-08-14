@@ -101,15 +101,6 @@ async function handleLogin() {
     console.log('登录之后的userINof')
     console.log(userInfo)
     adminStore.setUserInfo(userInfo)
-    // console.log('保存成功')
-    // console.log(adminStore.userInfo.id)
-    if (userInfo) {
-      notification.success({
-        message: t('sys.login.loginSuccessTitle'),
-        description: `${t('sys.login.loginSuccessDesc')}: ${userInfo.realName}`,
-        duration: 3,
-      });
-    }
   } catch (error) {
     createErrorModal({
       title: t('sys.api.errorTip'),

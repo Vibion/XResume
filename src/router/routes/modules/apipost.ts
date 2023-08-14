@@ -11,7 +11,7 @@ const apipost: AppRouteModule = {
   meta: {
     hideChildrenInMenu: true,
     orderNo: 14,
-    icon: 'ion:menu-outline',
+    icon: 'ion:aperture-sharp',
     title: 'API调用记录',
   },
   children: [

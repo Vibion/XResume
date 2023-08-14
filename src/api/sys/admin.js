@@ -118,3 +118,38 @@ export function findCompanyApipostAPI(params){
     }
   )
 }
+// 查询总访问量
+export function findLoginSumAPI(params){
+  return adminHttp.get(
+    {
+      url: '/base/loginhistory/getStageNumber',
+      params
+    }
+  )
+}
+// 按API种类查找调用次数
+export function findApiNumAPI(params){
+  return adminHttp.get(
+    {
+      url: '/base/api/getApiType',
+      params
+    }
+  )
+}
+// 按登录时间时间段查登陆次数
+export function getStageNumberApi(){
+  return adminHttp.get(
+    {
+      url: '/base/loginhistory/getStageNumber',
+    }
+  )
+}
+
+// 数据分析
+export function dataAnalysisApi(){
+  return adminHttp.get(
+    {
+      url: '/base/resume/dataAnalysis',
+    }
+  )
+}

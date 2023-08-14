@@ -3,9 +3,9 @@
     <template #headerContent>
       <div class="flex justify-between items-center">
         <span class="flex-1">
-          <a href="https://github.com/ZmuX1n/cv_analysis/tree/main/cvanal" target="_blank">{{ name }}</a>
+          <a href="https://github.com/ZmuX1n/cv_analysis/tree/main/cvanal" target="_blank">XResume Admin</a>
           是一个基于Vue3.0、Vite、 Ant-Design-Vue 、TypeScript
-          的后台解决方案，目标是为中大型项目开发,提供现成的开箱解决方案及丰富的示例,原则上不会限制任何代码用于商用。
+          的简历解析系统后台解决方案。项目成员均来自四川大学软件学院。
         </span>
       </div>
     </template>
@@ -60,7 +60,7 @@ const infoSchema: DescItem[] = [
 ];
 
 const infoData = {
-  version,
+  version: '2.1.0',
   lastBuildTime,
   doc: DOC_URL,
   preview: SITE_URL,

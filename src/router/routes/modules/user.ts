@@ -11,7 +11,7 @@ const user: AppRouteModule = {
   meta: {
     hideChildrenInMenu: true,
     orderNo: 12,
-    icon: 'ion:menu-outline',
+    icon: 'material-symbols:remember-me',
     title: '成员列表',
   },
   children: [

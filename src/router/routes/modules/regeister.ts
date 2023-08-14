@@ -11,7 +11,7 @@ const regester: AppRouteModule = {
   meta: {
     hideChildrenInMenu: true,
     orderNo: 11,
-    icon: 'ion:menu-outline',
+    icon: 'mdi:account-plus',
     title: '申请列表',
   },
   children: [

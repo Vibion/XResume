@@ -5,7 +5,13 @@ export interface LoginParams {
   username: string;
   password: string;
 }
-
+export interface GetStageNumberResultModel {
+  
+}
+export interface EveryHour {
+  hour: number;
+  count: number;
+}
 export interface RoleInfo {
   roleName: string;
   value: string;

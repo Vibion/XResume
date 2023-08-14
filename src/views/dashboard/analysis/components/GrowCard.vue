@@ -1,13 +1,8 @@
 <template>
   <div class="md:flex">
     <template v-for="(item, index) in growCardList" :key="item.title">
-      <Card
-        size="small"
-        :loading="loading"
-        :title="item.title"
-        class="md:w-1/4 w-full !md:mt-0"
-        :class="{ '!md:mr-4': index + 1 < 4, '!mt-4': index > 0 }"
-      >
+      <Card size="small" :loading="loading" :title="item.title" class="md:w-1/4 w-full !md:mt-0"
+        :class="{ '!md:mr-4': index + 1 < 4, '!mt-4': index > 0 }">
         <template #extra>
           <Tag :color="item.color">{{ item.action }}</Tag>
         </template>
@@ -25,15 +20,43 @@
     </template>
   </div>
 </template>
-<script lang="ts" setup>
-  import { CountTo } from '/@/components/CountTo/index';
-  import Icon from '@/components/Icon/Icon.vue';
-  import { Tag, Card } from 'ant-design-vue';
-  import { growCardList } from '../data';
+<script  setup>
+import { CountTo } from '/@/components/CountTo/index';
+import Icon from '@/components/Icon/Icon.vue';
+import { Tag, Card } from 'ant-design-vue';
+import { growCardList } from '../data';
+import { findLoginSumAPI, findApiNumAPI, getStageNumberApi } from '/@/api/sys/admin'
+import { ref } from 'vue'
+import { useAdminStore } from '/@/store/modules/admin'
 
-  defineProps({
-    loading: {
-      type: Boolean,
-    },
-  });
+
+const adminStore = useAdminStore()
+defineProps({
+  loading: {
+    type: Boolean,
+  },
+});
+const loginSum = ref(0)
+const findLoginSum = async () => {
+  const res = await findLoginSumAPI()
+  // console.log('res')
+  const totalCount = res.reduce((sum, item) => sum + item.count, 0);
+  // console.log(totalCount)
+  growCardList[0].value = totalCount
+  growCardList[0].total = totalCount
+  const resumeExtra = await findApiNumAPI({ url: '/base/api/getApiType' })
+  growCardList[1].value = resumeExtra
+  growCardList[1].total = resumeExtra
+  const personalImage = await findApiNumAPI({ url: '/base/user/companyToUser' })
+  growCardList[2].value = personalImage
+  growCardList[2].total = personalImage
+  const postMatch = await findApiNumAPI({ url: '/base/user/noActive' })
+  growCardList[3].value = postMatch
+  growCardList[3].total = postMatch
+  const timeList = await getStageNumberApi()
+  const countArray = timeList.map(item => item.count);
+  adminStore.setTimeList(countArray)
+}
+findLoginSum()
+
 </script>
