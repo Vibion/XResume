@@ -58,10 +58,11 @@ export function deleteUser(data){
     }
   )
 }
-export function findUser(){
+export function findUser(params){
   return adminHttp.get(
     {
-      url: '/base/user/isActive'
+      url: '/base/user/isActive',
+      params
     }
   )
 }
@@ -99,5 +100,21 @@ export function findCompanyLoginHistoryAPI(params){
     }
   )
 }
-
-
+// 查询api调用记录表
+export function findAllApipostAPI(params){
+  return adminHttp.get(
+    {
+      url: '/base/api/getApiLog',
+      params
+    }
+  )
+}
+// 按公司查询api调用记录表
+export function findCompanyApipostAPI(params){
+  return adminHttp.get(
+    {
+      url: '/base/api/getCompanyApi',
+      params
+    }
+  )
+}

@@ -4,7 +4,7 @@ import { defineStore } from 'pinia'
 // 第一个参数是你的应用中 Store 的唯一 ID。
 export const useAdminStore = defineStore('admin', {
   // 其他配置...
-  state: ()=> ({userInfo : {},currentCompany:''}),
+  state: ()=> ({userInfo : {},currentCompany:'',currentCompanyApi:''}),
   getters:{
     getUserInfo:(state)=>state.userInfo,
     getCurrentCompany:(state)=>state.currentCompany
@@ -15,7 +15,10 @@ export const useAdminStore = defineStore('admin', {
     },
     setCurrentCompany(company){
       this.currentCompany = company
-    }
+    },
+    setCurrentCompanyApi(company){
+      this.currentCompanyApi = company
+    },
   },
   persist: {
     enabled: true , // 这个配置代表存储生效，而且是整个store都存储

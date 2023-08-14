@@ -113,26 +113,15 @@ const queryForm = ref({
 
 
 const tableData = ref([])
-const initActivate = async () => {
-  tableData.value = await findactivateUser()
-  // console.log('table')
-  // console.log(tableData.value)
-}
-// initActivate()
+
 // 分页器的配置
 const handleSizeChange = (pageSize) => {
-  // queryForm.value.pageNo = 1
-  // queryFormByName.value.pageNo = 1
   companyUserForm.value.pageSize = pageSize
-  // queryFormByName.value.pageSize = pageSize
-  findCompanyRegister('赛博简历')
-  // initAdminConsultRecord()
+  findCompanyRegister(adminStore.currentCompany)
 }
 const handleCurrentChange = (pageNum) => {
   companyUserForm.value.pageNum = pageNum
-  findCompanyRegister('赛博简历')
-  // queryFormByName.value.pageNum = pageNum
-  // initAdminConsultRecord()
+  findCompanyRegister(adminStore.currentCompany)
 }
 
 // 具体信息对话框配置信息
@@ -159,7 +148,7 @@ const sendActivate = async () => {
     type: 'success',
   })
   dialogactivateVisible.value = false
-  initActivate()
+  findCompanyRegister(adminStore.currentCompany)
 }
 // 删除
 const openDeleteDialog = (row) => {
@@ -177,7 +166,7 @@ const sendDelete = async () => {
     type: 'success',
   })
   dialogDeleteVisible.value = false
-  initActivate()
+  findCompanyRegister(adminStore.currentCompany)
 }
 
 // 密码的显示与隐藏
@@ -216,31 +205,26 @@ const companyCellStyle = (data) => {
 }
 // 点击公司进行申请人员的跳转
 const companyCellClick = (row, column, cell, event) => {
-  // alert(row, column, cell, event)
-  console.log(row.item)
+  adminStore.setCurrentCompany(row.item)
   findCompanyRegister(row.item)
 }
 // 查询各个公司人员
 const findAllCompany = async () => {
   const list = await findAllCompanyAPI()
   companyData.value = list.map((item => ({ item })))
+  findCompanyRegister(companyData.value[0].item)
 }
 findAllCompany()
 const companyUserForm = ref({
-  companyName: '',
+  company: '',
   pageNum: 1,
   pageSize: 12
 })
 const findCompanyRegister = async (name) => {
-  companyUserForm.value.companyName = name
-  console.log(companyUserForm.value)
+  companyUserForm.value.company = name
   const res = await findactivateUser(companyUserForm.value)
-  console.log(res)
   tableData.value = res.list
-  console.log(tableData.value)
-
   total.value = res.total
-  console.log('111')
 }
 </script>
 
