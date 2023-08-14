@@ -58,8 +58,8 @@ const transform: AxiosTransform = {
     // console.log('hasSuccess:' + hasSuccess)
     // console.log('status:' + status)
     // createMessage.success('123');
-    console.log(message)
-    console.log(status)
+    // console.log(message)
+    // console.log(status)
     if (!status) {
       // createMessage.error(message);
       // hasSuccess = false

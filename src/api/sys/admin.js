@@ -42,10 +42,11 @@ export function activateUser(data){
     }
   )
 }
-export function findactivateUser(){
+export function findactivateUser(params){
   return adminHttp.get(
     {
       url: '/base/user/noActive',
+      params
     }
   )
 }
@@ -61,6 +62,40 @@ export function findUser(){
   return adminHttp.get(
     {
       url: '/base/user/isActive'
+    }
+  )
+}
+export function findAllCompanyAPI(){
+  return adminHttp.get(
+    {
+      url: '/base/user/getCompany'
+    }
+  )
+}
+export function findCompanyUserAPI(params){
+  return adminHttp.get(
+    {
+      url: '/base/user/companyToUser',
+      params
+    }
+  )
+}
+
+// 查询登录记录表
+export function findAllLoginHistoryAPI(params){
+  return adminHttp.get(
+    {
+      url: '/base/loginhistory/getLoginLog',
+      params
+    }
+  )
+}
+// 按公司查询登录记录表
+export function findCompanyLoginHistoryAPI(params){
+  return adminHttp.get(
+    {
+      url: '/base/loginhistory/getCompanyLogin',
+      params
     }
   )
 }

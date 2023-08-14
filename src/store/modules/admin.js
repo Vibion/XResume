@@ -4,13 +4,17 @@ import { defineStore } from 'pinia'
 // 第一个参数是你的应用中 Store 的唯一 ID。
 export const useAdminStore = defineStore('admin', {
   // 其他配置...
-  state: ()=> ({userInfo : {}}),
+  state: ()=> ({userInfo : {},currentCompany:''}),
   getters:{
-    getUserInfo:(state)=>state.userInfo
+    getUserInfo:(state)=>state.userInfo,
+    getCurrentCompany:(state)=>state.currentCompany
   },
   actions:{
     setUserInfo(userInfo){
       this.userInfo = userInfo
+    },
+    setCurrentCompany(company){
+      this.currentCompany = company
     }
   },
   persist: {

@@ -8,40 +8,23 @@
             <!-- <el-table-column type="index" width="50" /> -->
             <el-table-column prop="item" label="公司列表" width="200" />
           </el-table>
+          <el-button type="primary" plain style="margin-top: 20px;" @click="clearCurrentCompany">查看全部</el-button>
         </el-card>
       </el-col>
       <el-col :span="20">
         <el-card style="position: relative; top:5px; height:100%">
           <el-table :data="tableData" style="width: 100%">
             <el-table-column fixed prop="id" label="申请号" width="150" />
-            <el-table-column prop="username" label="用户名" width="170" />
-            <el-table-column prop="phone" label="手机号" width="170" />
-            <el-table-column prop="email" label="邮箱" width="220" />
-            <el-table-column prop="company" label="公司" width="250" />
-            <el-table-column prop="password" label="密码" width="220">
-              <template #default="{ row }">
-                <span v-if="showPassword">{{ row.password }} </span>
-                <span v-else>{{ '•'.repeat(6) }}</span>
-                <el-icon v-if="showPassword" :size="20" @click="showPassword = false"
-                  style="cursor: pointer; position: relative;top: 5px;left:5px">
-                  <View />
-                </el-icon>
-                <el-icon v-else :size="20" @click="wantView()"
-                  style="cursor: pointer; position: relative;top: 5px;left:5px">
-                  <Hide />
-                </el-icon>
-
-              </template>
-            </el-table-column>
-            <el-table-column fixed="right" label="操作" width="120">
-              <template #default="{ row }">
-                <el-button type="danger" :icon="Delete" @click="openDeleteDialog(row)" circle />
-              </template>
-            </el-table-column>
+            <el-table-column prop="username" label="用户名" width="100" />
+            <el-table-column prop="email" label="邮箱" width="120" />
+            <el-table-column prop="company" label="公司" width="150" />
+            <el-table-column prop="ip" label="ip地址" width="150" />
+            <el-table-column prop="browserName" label="浏览器" width="250" />
+            <el-table-column prop="loginTime" label="登录时间" width="250" />
           </el-table>
-          <!-- <el-pagination v-model:current-page="queryForm.pageNum" v-model:page-size="queryForm.pageSize"
+          <el-pagination v-model:current-page="queryForm.pageNum" v-model:page-size="queryForm.pageSize"
             :page-sizes="[2, 5, 10, 15]" layout="total, sizes, prev, pager, next, jumper" :total="total"
-            @size-change="handleSizeChange" @current-change="handleCurrentChange" /> -->
+            @size-change="handleSizeChange" @current-change="handleCurrentChange" />
           <el-dialog v-model="dialogDeleteVisible" title="是否删除" width="30%" :before-close="handleClose">
             <span>您确认定要删除用户{{ detial }}吗？</span>
             <template #footer>
@@ -78,76 +61,56 @@ import {
   Search,
   Star,
 } from '@element-plus/icons-vue'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { findUser } from "@/api/sys/admin"
 import { ElMessage } from 'element-plus'
-import { login, deleteUser, findAllCompanyAPI, findCompanyUserAPI } from '/@/api/sys/admin';
+import { findAllLoginHistoryAPI, findAllCompanyAPI, findCompanyLoginHistoryAPI } from '/@/api/sys/admin';
 import { useAdminStore } from '/@/store/modules/admin'
 
 const adminStore = useAdminStore()
 // 总页的数量
 const total = ref(0)
 const queryForm = ref({
-  // sname: '',
-  pageNum: 0,
-  pageSize: 15
+  company: '',
+  pageNum: 1,
+  pageSize: 5
 })
 
 
 const tableData = ref([])
-const initActivate = async () => {
-  tableData.value = await findUser()
-
+const initAllLoginHistory = async () => {
+  const res = await findAllLoginHistoryAPI(queryForm.value)
+  total.value = res.total
+  tableData.value = res.list
 }
-// initActivate()
+initAllLoginHistory()
 // 分页器的配置
-
-// 具体信息对话框配置信息
-const dialogDeleteVisible = ref(false)
-const dialogView = ref(false)
-const inputView = ref('')
-const detial = ref('')
-const userId = ref()
-
-// 删除
-const openDeleteDialog = (row) => {
-  dialogDeleteVisible.value = true
-  detial.value = row.username
-  userId.value = row.id
+const handleSizeChange = (pageSize) => {
+  queryForm.value.company = adminStore.currentCompany
+  // console.log('adminStore.currentCompany' + adminStore.currentCompany)
+  queryForm.value.pageSize = pageSize
+  if (queryForm.value.company.length === 0) {
+    initAllLoginHistory()
+  }
+  else {
+    findCompanyLoginHistory(adminStore.currentCompany)
+    // tableData.value = res.list
+    // total.value = res.total
+  }
 }
-const sendDelete = async () => {
-  // alert('发送删除id' + detial.value)
-  await deleteUser({
-    id: userId.value
-  })
-  ElMessage({
-    message: '删除成功！',
-    type: 'success',
-  })
-  dialogDeleteVisible.value = false
-  initActivate()
+const handleCurrentChange = (pageNum) => {
+  // debugger
+  queryForm.value.company = adminStore.currentCompany
+  queryForm.value.pageNum = pageNum
+  if (queryForm.value.company.length === 0) {
+    initAllLoginHistory()
+  }
+  else {
+    findCompanyLoginHistory(adminStore.currentCompany)
+    // tableData.value = res.list
+    // total.value = res.total
+  }
 }
-
-// 密码的显示与隐藏
-const showPassword = ref(false)
-const wantView = () => {
-  dialogView.value = true
-}
-const sendView = async () => {
-  console.log(adminStore.userInfo)
-  const userInfo = await login({
-    password: inputView.value,
-    username: adminStore.userInfo.username,
-    mode: 'none', //不要默认的错误提示
-  });
-  ElMessage({
-    message: '验证成功',
-    type: 'success',
-  })
-  dialogView.value = false
-  showPassword.value = true
-}
-
 // 可选择公司列表
 const companyData = ref([])
 const singleTableRef = ref()
@@ -166,7 +129,8 @@ const companyCellStyle = (data) => {
 const companyCellClick = (row, column, cell, event) => {
   // alert(row, column, cell, event)
   console.log(row.item)
-  findCompanyRegister(row.item)
+  adminStore.setCurrentCompany('admin')
+  findCompanyLoginHistory('admin')
 }
 // 查询各个公司人员
 const findAllCompany = async () => {
@@ -174,21 +138,17 @@ const findAllCompany = async () => {
   companyData.value = list.map((item => ({ item })))
 }
 findAllCompany()
-const companyUserForm = ref({
-  companyName: '',
-  pageNum: 1,
-  pageSize: 12
-})
-const findCompanyRegister = async (name) => {
-  companyUserForm.value.companyName = name
-  console.log(companyUserForm.value)
-  const res = await findCompanyUserAPI(companyUserForm.value)
-  console.log(res)
+const findCompanyLoginHistory = async (name) => {
+  queryForm.value.company = name
+  const res = await findCompanyLoginHistoryAPI(queryForm.value)
   tableData.value = res.list
-  console.log(tableData.value)
-
   total.value = res.total
-  console.log('111')
+}
+// 清除现有公司
+const clearCurrentCompany = () => {
+  adminStore.currentCompany = ''
+  queryForm.value.company = ''
+  initAllLoginHistory()
 }
 </script>
 <style>

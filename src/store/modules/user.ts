@@ -102,6 +102,22 @@ export const useUserStore = defineStore({
         const data = await loginApi(loginParams, mode);
         // const { token } = data;
         // console.log( data);
+        // const data = {
+        //   userId: '1',
+        //   username: 'vben',
+        //   realName: 'admin',
+        //   avatar: '',
+        //   desc: 'manager',
+        //   password: '123456',
+        //   token: 'fakeToken1',
+        //   homePath: '/dashboard/analysis',
+        //   roles: [
+        //     {
+        //       roleName: 'Super Admin',
+        //       value: 'super',
+        //     },
+        //   ],
+        // };
         const token = 'fakeToken1';
         
         // save token
@@ -123,16 +139,16 @@ export const useUserStore = defineStore({
       if (sessionTimeout) {
         this.setSessionTimeout(false);
       } else {
-        const permissionStore = usePermissionStore();
-        if (!permissionStore.isDynamicAddedRoute) {
-          const routes = await permissionStore.buildRoutesAction();
-          routes.forEach((route) => {
-            router.addRoute(route as unknown as RouteRecordRaw);
-          });
-          router.addRoute(PAGE_NOT_FOUND_ROUTE as unknown as RouteRecordRaw);
-          permissionStore.setDynamicAddedRoute(true);
-        }
-        goHome && (await router.replace(userInfo?.homePath || PageEnum.BASE_HOME));
+        // const permissionStore = usePermissionStore();
+        // if (!permissionStore.isDynamicAddedRoute) {
+        //   const routes = await permissionStore.buildRoutesAction();
+        //   routes.forEach((route) => {
+        //     router.addRoute(route as unknown as RouteRecordRaw);
+        //   });
+        //   router.addRoute(PAGE_NOT_FOUND_ROUTE as unknown as RouteRecordRaw);
+        //   permissionStore.setDynamicAddedRoute(true);
+        // }
+        goHome && (await router.replace('/dashboard/analysis' || PageEnum.BASE_HOME));
       }
       return data;
     },
