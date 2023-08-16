@@ -41,7 +41,12 @@ export const option = [
 },
 {
     prop: 'working_experience.working_hours',
-    label: '工作时长(单位年)',
+    label: '工作时长',
+    // width: 250
+},
+{
+    prop: 'company',
+    label: '所属公司',
     // width: 250
 },
   {

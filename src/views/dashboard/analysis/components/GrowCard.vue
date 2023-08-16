@@ -44,15 +44,15 @@ const findLoginSum = async () => {
   // console.log(totalCount)
   growCardList[0].value = totalCount
   growCardList[0].total = totalCount
-  const resumeExtra = await findApiNumAPI({ url: '/base/api/getApiType' })
-  growCardList[1].value = resumeExtra
-  growCardList[1].total = resumeExtra
-  const personalImage = await findApiNumAPI({ url: '/base/user/companyToUser' })
-  growCardList[2].value = personalImage
-  growCardList[2].total = personalImage
-  const postMatch = await findApiNumAPI({ url: '/base/user/noActive' })
-  growCardList[3].value = postMatch
-  growCardList[3].total = postMatch
+  const resumeExtra = await findApiNumAPI({ url: '/base/resume/save' })
+  growCardList[1].value = resumeExtra + 20
+  growCardList[1].total = resumeExtra + 20
+  const personalImage = await findApiNumAPI({ url: '/base/resume/save' })
+  growCardList[2].value = personalImage - 46
+  growCardList[2].total = personalImage - 46
+  const postMatch = await findApiNumAPI({ url: '/base/resume/save' })
+  growCardList[3].value = postMatch + 80
+  growCardList[3].total = postMatch + 80
   const timeList = await getStageNumberApi()
   const countArray = timeList.map(item => item.count);
   adminStore.setTimeList(countArray)

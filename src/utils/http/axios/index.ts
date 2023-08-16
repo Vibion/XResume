@@ -19,7 +19,9 @@ import { joinTimestamp, formatRequestDate } from './helper';
 import { useUserStoreWithOut } from '/@/store/modules/user';
 import { AxiosRetry } from '/@/utils/http/axios/axiosRetry';
 import axios from 'axios';
+// import { useAdminStore } from '/@/store/modules/admin'
 
+// const adminStore = useAdminStore()
 const globSetting = useGlobSetting();
 const urlPrefix = globSetting.urlPrefix;
 const { createMessage, createErrorModal, createSuccessModal } = useMessage();
@@ -291,6 +293,7 @@ export const defHttp = createAxios();
 // other api url
 export const adminHttp = createAxios({
   headers:{
-    'Content-Type': ContentTypeEnum.FORM_URLENCODED
+    'Content-Type': ContentTypeEnum.FORM_URLENCODED,
+    // 'Token':sessionStorage.getItem('admin').userInfo['token']
   }
 });

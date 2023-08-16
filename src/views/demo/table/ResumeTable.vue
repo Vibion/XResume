@@ -7,10 +7,10 @@
         </el-select>
       </el-col>
       <!-- 搜索按钮 -->
-      <el-col :span="3">
+      <!-- <el-col :span="3">
         <el-button type="primary" :icon="Search" @click="initAdminConsultRecordByName">搜索
         </el-button>
-      </el-col>
+      </el-col> -->
     </el-row>
     <el-table :data="tableData" stripe style="width: 100%">
       <el-table-column :prop="item.prop" :label="item.label" v-for="(item, index) in option" :key="index"
@@ -35,6 +35,7 @@
         </template>
         <template #default="{ row }" v-if="item.prop === 'action'">
           <el-button type="success" size="small" :icon="Edit" @click="checkFullInfo(row)"></el-button>
+          <el-button type="danger" size="small" :icon="Delete" @click="deleteResume(row)"></el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -52,41 +53,37 @@
         </span>
       </template>
     </el-dialog>
+    <el-dialog v-model="dialogDeleteVisible" title="是否删除" width="30%" :before-close="handleClose">
+      <span>您确认定要删除用户{{ currentRow.base_info.name }}吗？</span>
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button @click="dialogDeleteVisible = false">取消</el-button>
+          <el-button type="primary" @click="sendDelete()">
+            确定
+          </el-button>
+        </span>
+      </template>
+    </el-dialog>
   </el-card>
 </template>
 <script setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { Search, Edit, Setting, Delete } from '@element-plus/icons-vue'
 import { option } from "./ResumeTableoptions"
-import { findAllResume } from "@/api/sys/admin"
-const value = ref('')
-const options = [
-  {
-    value: 'Option1',
-    label: 'Option1',
-  },
-  {
-    value: 'Option2',
-    label: 'Option2',
-  },
-  {
-    value: 'Option3',
-    label: 'Option3',
-  },
-  {
-    value: 'Option4',
-    label: 'Option4',
-  },
-  {
-    value: 'Option5',
-    label: 'Option5',
-  },
-]
+import { findAllResume, findAllCompanyAPI, deleteResumeApi } from "@/api/sys/admin"
+import { useAdminStore } from '/@/store/modules/admin'
+import { ElMessage } from 'element-plus'
 
+const adminStore = useAdminStore()
+const value = ref('')
+
+const options = ref([])
+const dialogDeleteVisible = ref(false)
 // 总页的数量
 const total = ref(0)
 const queryForm = ref({
   // sname: '',
+  company: '',
   pageNum: 0,
   pageSize: 15
 })
@@ -96,29 +93,22 @@ const queryFormByName = ref({
   pageSize: 15
 })
 const tableData = ref([{ 'id': 1 }])
-
-const initAllResume = async () => {
+const initAllResume = async (company) => {
+  queryForm.value.company = company
   const res = await findAllResume(queryForm.value)
   console.log('请求所有简历之后的返回信息')
   tableData.value = res.list
   console.log(res)
   total.value = res.total
 }
-initAllResume()
 // 分页器的配置
 const handleSizeChange = (pageSize) => {
-  // queryForm.value.pageNo = 1
-  // queryFormByName.value.pageNo = 1
   queryForm.value.pageSize = pageSize
-  // queryFormByName.value.pageSize = pageSize
-  initAllResume()
-  // initAdminConsultRecord()
+  initAllResume(adminStore.currentCompany)
 }
 const handleCurrentChange = (pageNum) => {
   queryForm.value.pageNum = pageNum
-  initAllResume()
-  // queryFormByName.value.pageNum = pageNum
-  // initAdminConsultRecord()
+  initAllResume(adminStore.currentCompany)
 }
 
 // 具体信息对话框配置信息
@@ -127,5 +117,51 @@ const detial = ref('')
 const checkFullInfo = (row) => {
   dialogVisible.value = true
   detial.value = row
+}
+
+// 查询所有公司
+const findAllCompany = async () => {
+  const list = await findAllCompanyAPI()
+  const optionsList = list.map((item, index) => {
+    const option = {
+      value: item,
+      label: item,
+    };
+    return option;
+  });
+  console.log("options");
+  console.log(optionsList);
+  options.value = optionsList
+  value.value = options.value[0].label
+  adminStore.currentCompany = options.value[0].value
+  initAllResume(options.value[0].value)
+}
+findAllCompany()
+
+watch(value, (newValue, oldValue) => {
+  // console.log(`Value changed from ${oldValue} to ${newValue}`);
+  adminStore.setCurrentCompany(newValue)
+  initAllResume(adminStore.currentCompany)
+})
+// 删除简历id
+const currentRow = ref()
+const deleteResume = (row) => {
+  dialogDeleteVisible.value = true
+  currentRow.value = row
+  // console.log(currentRow.value)
+}
+const sendDelete = async () => {
+  const res = await deleteResumeApi({ id: currentRow.value.id })
+  // console.log(res)
+  if (res === '删除成功') {
+    ElMessage({
+      message: '删除成功',
+      type: 'success',
+    })
+  } else {
+    ElMessage.error('删除失败，请刷新重试')
+  }
+  dialogDeleteVisible.value = false
+  initAllResume(adminStore.currentCompany)
 }
 </script>

@@ -129,8 +129,8 @@ const companyCellStyle = (data) => {
 const companyCellClick = (row, column, cell, event) => {
   // alert(row, column, cell, event)
   console.log(row.item)
-  adminStore.setCurrentCompanyApi('admin')
-  findCompanyApipost('admin')
+  adminStore.setCurrentCompanyApi(row.item)
+  findCompanyApipost(row.item)
 }
 // 查询各个公司人员
 const findAllCompany = async () => {

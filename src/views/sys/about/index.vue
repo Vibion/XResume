@@ -3,7 +3,7 @@
     <template #headerContent>
       <div class="flex justify-between items-center">
         <span class="flex-1">
-          <a href="https://github.com/ZmuX1n/cv_analysis/tree/main/cvanal" target="_blank">XResume Admin</a>
+          <a href="https://github.com/ZmuX1n/cv_analysis/tree/lxx" target="_blank">XResume Admin</a>
           是一个基于Vue3.0、Vite、 Ant-Design-Vue 、TypeScript
           的简历解析系统后台解决方案。项目成员均来自四川大学软件学院。
         </span>

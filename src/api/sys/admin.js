@@ -146,10 +146,20 @@ export function getStageNumberApi(){
 }
 
 // 数据分析
-export function dataAnalysisApi(){
+export function dataAnalysisApi(params){
   return adminHttp.get(
     {
       url: '/base/resume/dataAnalysis',
+      params
+    }
+  )
+}
+// 删除简历
+export function deleteResumeApi(data){
+  return adminHttp.post(
+    {
+      url: '/base/resume/deleteResume',
+      data
     }
   )
 }
