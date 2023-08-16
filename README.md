@@ -1,4 +1,5 @@
-# **赛博简历团队 Readme**
+# **赛博简历团队后台管理系统 Readme**
+我们的后台管理系统基于vben admin进行二次开发，使用主流Vue3.2+Typescript技术栈
 
 1. #### **关于我们—About Us**
 
